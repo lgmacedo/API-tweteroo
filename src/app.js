@@ -70,5 +70,17 @@ app.get("/tweets", (req, res) => {
   res.send(get10LastTweets(tweets));
 });
 
+app.get("/tweets/:USERNAME", (req, res) => {
+  const { USERNAME } = req.params;
+  let arrTweetsUser = tweets.filter((t) => t.username === USERNAME);
+  arrTweetsUser = arrTweetsUser.reverse();
+  arrTweetsUser = arrTweetsUser.map((t) => ({
+    username: t.username,
+    avatar: getAvatar(t.username),
+    tweet: t.tweet,
+  }));
+  res.send(arrTweetsUser);
+});
+
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Running server on port ${PORT}`));
