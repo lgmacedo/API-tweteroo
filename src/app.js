@@ -61,5 +61,5 @@ app.get("/tweets", (req, res) => {
   res.send(get10LastTweets(tweets));
 });
 
-const PORT = 5001;
+const PORT = 5000;
 app.listen(PORT, () => console.log(`Running server on port ${PORT}`));
