@@ -33,17 +33,37 @@ app.use(express.json());
 
 app.post("/sign-up", (req, res) => {
   const { username, avatar } = req.body;
+  if (
+    !username ||
+    username === "" ||
+    typeof username !== "string" ||
+    !avatar ||
+    avatar === "" ||
+    typeof avatar !== "string"
+  ) {
+    return res.status(400).send("Todos os campos são obrigatórios!");
+  }
   users.push({ username, avatar });
-  res.send("OK");
+  res.status(201).send("OK");
 });
 
 app.post("/tweets", (req, res) => {
   const { username, tweet } = req.body;
   if (users.find((u) => u.username === username) === undefined) {
-    return res.send("UNAUTHORIZED");
+    return res.status(401).send("UNAUTHORIZED");
+  }
+  if (
+    !username ||
+    username === "" ||
+    typeof username !== "string" ||
+    !tweet ||
+    tweet === "" ||
+    typeof tweet !== "string"
+  ) {
+    return res.status(400).send("Todos os campos são obrigatórios!");
   }
   tweets.push({ username, tweet });
-  res.send("OK");
+  res.status(201).send("OK");
 });
 
 app.get("/tweets", (req, res) => {
