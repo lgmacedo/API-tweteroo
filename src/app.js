@@ -1,20 +1,9 @@
 import express from "express";
 import cors from "cors";
 
-const users = [
-  {
-    username: "bobesponja",
-    avatar:
-      "https://cdn.shopify.com/s/files/1/0150/0643/3380/files/Screen_Shot_2019-07-01_at_11.35.42_AM_370x230@2x.png",
-  },
-];
+const users = [];
 
-const tweets = [
-  {
-    username: "bobesponja",
-    tweet: "Eu amo hambúrguer de siri!",
-  },
-];
+const tweets = [];
 
 function getAvatar(username) {
   for (let i = 0; i < users.length; i++) {
@@ -43,17 +32,17 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/sign-up", (req, res) => {
-  const {username, avatar} = req.body;
-  users.push({username, avatar});
+  const { username, avatar } = req.body;
+  users.push({ username, avatar });
   res.send("OK");
 });
 
 app.post("/tweets", (req, res) => {
-  const {username, tweet} = req.body;
-  if(users.find(u=>u.username === username) === undefined){
+  const { username, tweet } = req.body;
+  if (users.find((u) => u.username === username) === undefined) {
     return res.send("UNAUTHORIZED");
   }
-  tweets.push({username, tweet});
+  tweets.push({ username, tweet });
   res.send("OK");
 });
 
