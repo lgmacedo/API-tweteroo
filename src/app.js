@@ -63,7 +63,7 @@ app.post("/tweets", (req, res) => {
   ) {
     return res.status(400).send("Todos os campos são obrigatórios!");
   }
-  tweets.push({ user, tweet });
+  tweets.push({ username: user, tweet });
   res.status(201).send("OK");
 });
 
