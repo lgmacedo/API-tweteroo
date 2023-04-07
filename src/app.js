@@ -48,21 +48,22 @@ app.post("/sign-up", (req, res) => {
 });
 
 app.post("/tweets", (req, res) => {
-  const { username, tweet } = req.body;
-  if (users.find((u) => u.username === username) === undefined) {
+  const { user } = req.headers;
+  const { tweet } = req.body;
+  if (users.find((u) => u.username === user) === undefined) {
     return res.status(401).send("UNAUTHORIZED");
   }
   if (
-    !username ||
-    username === "" ||
-    typeof username !== "string" ||
+    !user ||
+    user === "" ||
+    typeof user !== "string" ||
     !tweet ||
     tweet === "" ||
     typeof tweet !== "string"
   ) {
     return res.status(400).send("Todos os campos são obrigatórios!");
   }
-  tweets.push({ username, tweet });
+  tweets.push({ user, tweet });
   res.status(201).send("OK");
 });
 
