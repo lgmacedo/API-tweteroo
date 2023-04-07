@@ -14,9 +14,13 @@ function getAvatar(username) {
   return null;
 }
 
-function get10LastTweets(tweets) {
+function getTweets(page) {
+  let pageFixed = page;
+  if (pageFixed === 0) {
+    pageFixed = 1;
+  }
   const arrTweets = [];
-  for (let i = tweets.length - 1; i >= 0; i--) {
+  for (let i = tweets.length - 1 - 10 * (pageFixed - 1); i >= 0; i--) {
     arrTweets.push({
       username: tweets[i].username,
       avatar: getAvatar(tweets[i].username),
@@ -67,7 +71,15 @@ app.post("/tweets", (req, res) => {
 });
 
 app.get("/tweets", (req, res) => {
-  res.send(get10LastTweets(tweets));
+  const { page } = req.query;
+  if (page && Number(page) >= 1) {
+    if (Number(page) === 1) {
+      return res.status(400).send("Informe uma página válida!");
+    } else {
+      return res.send(getTweets(Number(page)));
+    }
+  }
+  res.send(getTweets(0));
 });
 
 app.get("/tweets/:USERNAME", (req, res) => {
