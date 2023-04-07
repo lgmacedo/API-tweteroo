@@ -72,7 +72,7 @@ app.post("/tweets", (req, res) => {
 
 app.get("/tweets", (req, res) => {
   const { page } = req.query;
-  if (page && Number(page) >= 1) {
+  if (page) {
     if (Number(page) <= 1) {
       return res.status(400).send("Informe uma página válida!");
     } else {
